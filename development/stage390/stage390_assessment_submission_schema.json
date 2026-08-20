@@ -1,0 +1,63 @@
+{
+  "schema": "qsp.stage390.assessment-submission-schema.v1",
+  "stage": 390,
+  "submission_type": "independent_third_party_assessment",
+  "required_fields": [
+    "schema",
+    "stage",
+    "assessor",
+    "environment",
+    "upstream_binding",
+    "reproduction",
+    "assessment"
+  ],
+  "assessor": {
+    "required_fields": [
+      "assessor_id",
+      "independence_declared"
+    ],
+    "independence_declared_required_value": true
+  },
+  "environment": {
+    "required_fields": [
+      "os",
+      "architecture",
+      "python_version",
+      "openssl_version"
+    ]
+  },
+  "upstream_binding": {
+    "required_fields": [
+      "stage389_result_sha256",
+      "stage389_commit"
+    ],
+    "expected_stage389_result_sha256": "3a8815593fd4b570b881e39806c57e32f11d7aec7f544e30481021167b2667c4",
+    "expected_stage389_commit": "65c881d6c4a27cc9d49726c998b2fc96de48b117"
+  },
+  "reproduction": {
+    "required_fields": [
+      "reproduction_completed",
+      "deterministic_result_obtained",
+      "reference_result_compared",
+      "critical_mismatch_count"
+    ]
+  },
+  "assessment": {
+    "allowed_outcomes": [
+      "agreement",
+      "disagreement",
+      "incomplete"
+    ],
+    "required_fields": [
+      "outcome",
+      "findings"
+    ]
+  },
+  "forbidden_self_assertions": [
+    "external_assessment_completed",
+    "formal_certification",
+    "system_wide_formal_acceptance",
+    "entire_system_quantum_safe",
+    "stage389_dual_timestamp_verified"
+  ]
+}

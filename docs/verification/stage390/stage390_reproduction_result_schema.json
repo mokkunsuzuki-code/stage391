@@ -1,0 +1,33 @@
+{
+  "schema": "qsp.stage390.reproduction-result-schema.v1",
+  "stage": 390,
+  "source_stage": 389,
+  "required_fields": [
+    "upstream_binding_verified",
+    "evidence_hash_integrity_verified",
+    "deterministic_verification_completed",
+    "fail_closed_behavior_verified",
+    "publication_boundary_verified",
+    "critical_mismatch_count",
+    "reproduction_completed"
+  ],
+  "success_definition": {
+    "upstream_binding_verified": true,
+    "evidence_hash_integrity_verified": true,
+    "deterministic_verification_completed": true,
+    "fail_closed_behavior_verified": true,
+    "publication_boundary_verified": true,
+    "critical_mismatch_count": 0,
+    "reproduction_completed": true
+  },
+  "mismatch_categories": [
+    "upstream_binding_mismatch",
+    "evidence_hash_mismatch",
+    "deterministic_result_mismatch",
+    "fail_closed_behavior_mismatch",
+    "publication_boundary_violation",
+    "environment_incompatibility",
+    "dependency_unavailable",
+    "unknown"
+  ]
+}

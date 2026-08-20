@@ -1519,3 +1519,132 @@ See the repository-level:
 `LICENSE`
 
 The MIT License applies to the published source code and documentation in this repository. It does not override confidentiality requirements, security boundaries, private-material restrictions, or applicable third-party licenses.
+
+---
+
+## Stage390 — Independent Third-Party Reproduction & Assessment Intake Gate
+
+日本語:
+
+**第三者独立再現・外部評価受入ゲート**
+
+Stage390は、Stage389までに固定された検証結果と公開証拠を変更せず、第三者がQSPの検証結果を独立再現し、その結果をmachine-readableな形式で提出できる受入ゲートを追加します。
+
+Stage390は、第三者から提出された主張をそのまま信用しません。
+
+Stage389へのbinding、再現状態、mismatch count、assessment outcomeを検証し、矛盾・改ざん・自己昇格・不正形式をFail-Closedで拒否します。
+
+### Current Stage390 Decision
+
+`third_party_assessment_ready`
+
+現在は第三者評価を受け入れる仕組みが準備できた状態です。
+
+まだ実際の外部第三者評価が完了したことを意味しません。
+
+Current state:
+
+`submission_present = false`
+
+`upstream_binding_verified = true`
+
+`independent_reproduction_completed = false`
+
+`external_assessment_completed = false`
+
+`formal_certification = false`
+
+`system_wide_formal_acceptance = false`
+
+`entire_system_quantum_safe = false`
+
+### Stage389 Inherited State
+
+Stage390はStage389の状態を勝手に成功へ昇格させません。
+
+Stage389 remains:
+
+`dual_timestamp_pending`
+
+`rfc3161_verified = true`
+
+`opentimestamps_verified = false`
+
+`dual_timestamp_verified = false`
+
+`stage389_dual_timestamp_verified = false`
+
+Bitcoin/OpenTimestampsの最終検証は、Stage389自身で完了する必要があります。
+
+### Independent Assessment Intake
+
+Stage390 supports:
+
+- independent assessor declaration
+- assessor environment metadata
+- exact Stage389 result binding
+- exact Stage389 commit binding
+- independent reproduction state
+- machine-readable assessment findings
+- agreement / disagreement / incomplete classification
+- Fail-Closed rejection of invalid submissions
+
+Supported outcomes:
+
+`agreement`
+
+`disagreement`
+
+`incomplete`
+
+The effective outcome is derived by the Stage390 verifier rather than blindly trusting the submitted outcome.
+
+### Canonical Stage390 Result
+
+Current canonical result SHA-256:
+
+`90f57cfdca45fe7b6f3a150302e22060ce1e6ac46d2ff2b12889ca51e8c8dc4e`
+
+Repeated verifier executions produced byte-for-byte identical canonical readiness results.
+
+### Fail-Closed Regression
+
+Stage390 currently validates 12 negative regression cases.
+
+Current result:
+
+`12 / 12 PASS`
+
+The tests reject forged external-assessment completion, forged certification, upstream SHA/commit tampering, invalid independence or execution state, contradictory agreement/disagreement claims, invalid mismatch counts, missing fields, and malformed JSON.
+
+### Mandatory Non-Claims
+
+The following remain false:
+
+`external_assessment_completed = false`
+
+`formal_certification = false`
+
+`system_wide_formal_acceptance = false`
+
+`entire_system_quantum_safe = false`
+
+`stage389_dual_timestamp_verified = false`
+
+Stage390 does not claim that a formal external assessment, certification, complete system acceptance, complete quantum safety, or Stage389 dual timestamp finalization has already occurred.
+
+### Stage390 Publication Boundary
+
+Stage390 preserves the existing QSP public/private boundary.
+
+The public repository does not intentionally publish private core, secrets, credentials, seeds, private keys, raw RFC3161 responses, raw OpenTimestamps proofs, or raw QKD secret material.
+
+### Stage390 License
+
+This project is licensed under the MIT License.
+
+See the repository-level:
+
+`LICENSE`
+
+The MIT License applies to the published source code and documentation in this repository. It does not override confidentiality requirements, private-material restrictions, security boundaries, or applicable third-party licenses.

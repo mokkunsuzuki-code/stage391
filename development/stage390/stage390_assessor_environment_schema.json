@@ -1,0 +1,29 @@
+{
+  "schema": "qsp.stage390.assessor-environment-schema.v1",
+  "stage": 390,
+  "required_fields": [
+    "os",
+    "os_version",
+    "architecture",
+    "python_version",
+    "openssl_version",
+    "execution_mode"
+  ],
+  "allowed_execution_modes": [
+    "local",
+    "container",
+    "ci",
+    "offline"
+  ],
+  "optional_fields": [
+    "git_version",
+    "shell",
+    "container_runtime",
+    "notes"
+  ],
+  "security_requirements": {
+    "private_material_required": false,
+    "network_access_required_for_core_reproduction": false,
+    "upstream_modification_allowed": false
+  }
+}

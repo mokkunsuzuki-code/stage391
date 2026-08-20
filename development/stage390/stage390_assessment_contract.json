@@ -1,0 +1,47 @@
+{
+  "schema": "qsp.stage390.assessment-contract.v1",
+  "stage": 390,
+  "name": "Independent Third-Party Reproduction & Assessment Intake Gate",
+  "purpose": "Provide a deterministic and fail-closed interface through which an independent third party can reproduce reviewed QSP verification evidence and submit an assessment result without modifying upstream evidence.",
+  "source_stage": 389,
+  "assessment_model": {
+    "assessor_must_be_independent": true,
+    "upstream_evidence_is_read_only": true,
+    "reproduction_result_required": true,
+    "assessment_result_required": true,
+    "machine_readable_result_required": true
+  },
+  "allowed_assessment_outcomes": [
+    "agreement",
+    "disagreement",
+    "incomplete"
+  ],
+  "required_reproduction_checks": [
+    "upstream_binding",
+    "evidence_presence",
+    "evidence_hash_integrity",
+    "deterministic_verification",
+    "fail_closed_behavior",
+    "publication_boundary"
+  ],
+  "success_requirements": {
+    "independent_reproduction_completed": true,
+    "assessment_result_structurally_valid": true,
+    "upstream_binding_verified": true,
+    "critical_failure_count": 0
+  },
+  "non_claims": {
+    "external_assessment_completed": false,
+    "formal_certification": false,
+    "system_wide_formal_acceptance": false,
+    "entire_system_quantum_safe": false,
+    "stage389_dual_timestamp_verified": false
+  },
+  "security_policy": {
+    "fail_closed": true,
+    "private_material_publication_forbidden": true,
+    "upstream_evidence_modification_forbidden": true,
+    "self_asserted_external_assessment_forbidden": true,
+    "false_success_promotion_forbidden": true
+  }
+}

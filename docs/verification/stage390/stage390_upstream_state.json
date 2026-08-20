@@ -1,0 +1,26 @@
+{
+  "schema": "qsp.stage390.upstream-state.v1",
+  "stage": 390,
+  "source_stage": 389,
+  "source_stage_name": "Independent Assessment Package Dual External Timestamp Anchoring & Verification Gate",
+  "source_commit": "65c881d6c4a27cc9d49726c998b2fc96de48b117",
+  "source_result": {
+    "path": "development/stage389/stage389_dual_timestamp_result.json",
+    "sha256": "3a8815593fd4b570b881e39806c57e32f11d7aec7f544e30481021167b2667c4"
+  },
+  "stage389_state": {
+    "decision": "dual_timestamp_pending",
+    "verification_status": "pending_external_confirmation",
+    "rfc3161_verified": true,
+    "opentimestamps_proof_present": true,
+    "opentimestamps_verified": false,
+    "dual_timestamp_verified": false,
+    "verification_incomplete_reason": "local_bitcoin_chain_data_unavailable"
+  },
+  "stage390_constraints": {
+    "must_not_promote_stage389_timestamp_state": true,
+    "must_not_claim_dual_timestamp_verified": true,
+    "must_preserve_stage389_result": true,
+    "third_party_assessment_is_independent_of_timestamp_completion": true
+  }
+}

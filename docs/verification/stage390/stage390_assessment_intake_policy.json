@@ -1,0 +1,33 @@
+{
+  "schema": "qsp.stage390.assessment-intake-policy.v1",
+  "stage": 390,
+  "source_stage": 389,
+  "classification": {
+    "agreement": {
+      "requires_reproduction_completed": true,
+      "requires_upstream_binding_verified": true,
+      "requires_critical_mismatch_count": 0
+    },
+    "disagreement": {
+      "requires_reproduction_completed": true,
+      "requires_critical_mismatch_count_greater_than": 0
+    },
+    "incomplete": {
+      "used_when_reproduction_completed": false
+    }
+  },
+  "decision_policy": {
+    "no_submission": "third_party_assessment_ready",
+    "valid_incomplete_submission": "third_party_assessment_incomplete",
+    "valid_disagreement_submission": "third_party_assessment_disagreement_received",
+    "valid_agreement_submission": "third_party_reproduction_agreement_received",
+    "invalid_submission": "fail_closed"
+  },
+  "non_claims": {
+    "external_assessment_completed": false,
+    "formal_certification": false,
+    "system_wide_formal_acceptance": false,
+    "entire_system_quantum_safe": false,
+    "stage389_dual_timestamp_verified": false
+  }
+}

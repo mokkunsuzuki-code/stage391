@@ -551,3 +551,35 @@ development/stage389/*
 
 # Stage389 public dual-timestamp verification workflow
 !.github/workflows/stage389-dual-timestamp-verification.yml
+
+# Stage390 public third-party assessment intake layer
+!development/stage390/
+!development/stage390/stage390_upstream_state.json
+!development/stage390/stage390_assessment_contract.json
+!development/stage390/stage390_assessment_submission_schema.json
+!development/stage390/stage390_assessor_environment_schema.json
+!development/stage390/stage390_reproduction_result_schema.json
+!development/stage390/stage390_assessment_intake_policy.json
+!development/stage390/verify_stage390_assessment_intake.py
+
+# Stage390 deterministic canonical intake result
+!development/stage390/stage390_assessment_intake_result.json
+!development/stage390/stage390_assessment_intake_result.sha256
+
+# Stage390 public Fail-Closed regression test suite
+!development/stage390/test_stage390_fail_closed.py
+
+# Stage390 public documentation
+!development/stage390/README.md
+
+# Stage390 public Pages evidence mirror
+!docs/verification/stage390/
+!docs/verification/stage390/README.md
+!docs/verification/stage390/stage390_upstream_state.json
+!docs/verification/stage390/stage390_assessment_contract.json
+!docs/verification/stage390/stage390_assessment_submission_schema.json
+!docs/verification/stage390/stage390_assessor_environment_schema.json
+!docs/verification/stage390/stage390_reproduction_result_schema.json
+!docs/verification/stage390/stage390_assessment_intake_policy.json
+!docs/verification/stage390/stage390_assessment_intake_result.json
+!docs/verification/stage390/stage390_assessment_intake_result.sha256

@@ -5311,5 +5311,272 @@ Verified / Pending / Block</pre>
 </section>
 <!-- STAGE389_APPEND_ONLY_END -->
 
+<!-- STAGE390_APPEND_ONLY_BEGIN -->
+<section class="card" id="stage390">
+  <h2>
+    Stage390: Independent Third-Party Reproduction
+    &amp; Assessment Intake Gate
+  </h2>
+
+  <p>
+    <strong>
+      第三者独立再現・外部評価受入ゲート
+    </strong>
+  </p>
+
+  <p>
+    Stage390は、Stage389までに固定された検証結果を変更せず、
+    外部の第三者が独立した再現結果と評価結果を提出し、
+    QSP側の結果とのagreement、disagreement、
+    またはincompleteをFail-Closedで判定するための
+    assessment intake interfaceを追加します。
+  </p>
+
+  <p>
+    Stage390は第三者評価が完了したことを
+    自己申告しません。
+    現在の状態は、第三者評価を受け入れるための
+    interfaceと検証条件が準備された状態です。
+  </p>
+
+  <h3>Current Decision</h3>
+
+  <p>
+    <code>third_party_assessment_ready</code>
+  </p>
+
+  <ul>
+    <li>
+      Verification status:
+      <code>ready</code>
+    </li>
+
+    <li>
+      Submission present:
+      <code>false</code>
+    </li>
+
+    <li>
+      Upstream binding verified:
+      <code>true</code>
+    </li>
+
+    <li>
+      Critical failure count:
+      <code>0</code>
+    </li>
+  </ul>
+
+  <h3>Independent Assessment State</h3>
+
+  <ul>
+    <li>
+      Independent reproduction completed:
+      <code>false</code>
+    </li>
+
+    <li>
+      External assessment completed:
+      <code>false</code>
+    </li>
+
+    <li>
+      Assessment outcome:
+      <code>null</code>
+    </li>
+
+    <li>
+      Formal certification:
+      <code>false</code>
+    </li>
+
+    <li>
+      System-wide formal acceptance:
+      <code>false</code>
+    </li>
+
+    <li>
+      Entire system quantum safe:
+      <code>false</code>
+    </li>
+  </ul>
+
+  <h3>Stage389 Preservation</h3>
+
+  <p>
+    Stage390はStage389のtimestamp状態を
+    成功へ昇格させません。
+  </p>
+
+  <ul>
+    <li>
+      Stage389 decision:
+      <code>dual_timestamp_pending</code>
+    </li>
+
+    <li>
+      RFC3161 verified:
+      <code>true</code>
+    </li>
+
+    <li>
+      OpenTimestamps verified:
+      <code>false</code>
+    </li>
+
+    <li>
+      Dual timestamp verified:
+      <code>false</code>
+    </li>
+
+    <li>
+      Stage389 dual timestamp verified:
+      <code>false</code>
+    </li>
+  </ul>
+
+  <p>
+    Bitcoin側の必要なチェーンデータが利用可能になり、
+    OpenTimestamps検証が成功するまでは、
+    Stage389自身が
+    <code>dual_timestamp_pending</code>
+    を保持します。
+  </p>
+
+  <h3>Exact Upstream Binding</h3>
+
+  <p>
+    Stage390のassessment intakeは、
+    Stage389の固定されたcanonical resultと
+    source commitへの一致を要求します。
+    上流証拠の改変や別結果への差し替えは
+    assessment successとして受理されません。
+  </p>
+
+  <h3>Fail-Closed Third-Party Intake</h3>
+
+  <p>
+    Stage390では12件のnegative regression testを実行し、
+    false、malformed、または自己昇格された
+    third-party assessment claimを拒否することを
+    確認しています。
+  </p>
+
+  <ol>
+    <li>Forged external assessment completion is rejected</li>
+    <li>Forged formal certification is rejected</li>
+    <li>Stage389 result SHA tampering is rejected</li>
+    <li>Stage389 commit tampering is rejected</li>
+    <li>Missing independence declaration is rejected</li>
+    <li>Invalid execution mode is rejected</li>
+    <li>Incomplete reproduction cannot claim agreement</li>
+    <li>Zero-mismatch result cannot claim disagreement</li>
+    <li>Negative mismatch count is rejected</li>
+    <li>Boolean mismatch count is rejected</li>
+    <li>Missing required field is rejected</li>
+    <li>Malformed JSON is rejected</li>
+  </ol>
+
+  <p>
+    Current regression result:
+    <code>12 / 12 PASS</code>
+  </p>
+
+  <h3>Canonical Stage390 Result</h3>
+
+  <p>
+    SHA-256:
+    <code>
+      90f57cfdca45fe7b6f3a150302e22060ce1e6ac46d2ff2b12889ca51e8c8dc4e
+    </code>
+  </p>
+
+  <h3>Public Stage390 Evidence</h3>
+
+  <ul>
+    <li>
+      <a href="./verification/stage390/README.md">
+        Stage390 Independent Assessment Instructions
+      </a>
+    </li>
+
+    <li>
+      <a href="./verification/stage390/stage390_upstream_state.json">
+        Stage390 Upstream State
+      </a>
+    </li>
+
+    <li>
+      <a href="./verification/stage390/stage390_assessment_contract.json">
+        Stage390 Assessment Contract
+      </a>
+    </li>
+
+    <li>
+      <a href="./verification/stage390/stage390_assessment_submission_schema.json">
+        Stage390 Assessment Submission Schema
+      </a>
+    </li>
+
+    <li>
+      <a href="./verification/stage390/stage390_assessor_environment_schema.json">
+        Stage390 Assessor Environment Schema
+      </a>
+    </li>
+
+    <li>
+      <a href="./verification/stage390/stage390_reproduction_result_schema.json">
+        Stage390 Reproduction Result Schema
+      </a>
+    </li>
+
+    <li>
+      <a href="./verification/stage390/stage390_assessment_intake_policy.json">
+        Stage390 Assessment Intake Policy
+      </a>
+    </li>
+
+    <li>
+      <a href="./verification/stage390/stage390_assessment_intake_result.json">
+        Stage390 Assessment Intake Result
+      </a>
+    </li>
+
+    <li>
+      <a href="./verification/stage390/stage390_assessment_intake_result.sha256">
+        Stage390 Result SHA-256 Record
+      </a>
+    </li>
+  </ul>
+
+  <h3>Preservation Boundary</h3>
+
+  <p>
+    Stage390はStage389以前の検証結果、
+    公開ページ、公開証拠を削除、置換、
+    または上書きしません。
+  </p>
+
+  <h3>Publication Boundary</h3>
+
+  <ul>
+    <li>No private core is published.</li>
+    <li>No private directory is published.</li>
+    <li>No secret, credential, token, seed, or private key is published.</li>
+    <li>No raw RFC3161 response is published.</li>
+    <li>No raw OpenTimestamps proof is published.</li>
+    <li>No raw QKD secret material is published.</li>
+    <li>Only reviewed public assessment metadata is published.</li>
+  </ul>
+
+  <h3>Stage390 License</h3>
+
+  <p>
+    <strong>License:</strong>
+    MIT License
+  </p>
+</section>
+<!-- STAGE390_APPEND_ONLY_END -->
+
 </body>
 </html>

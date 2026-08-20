@@ -1,0 +1,18 @@
+{
+  "assessment_outcome": null,
+  "critical_failure_count": 0,
+  "decision": "third_party_assessment_ready",
+  "entire_system_quantum_safe": false,
+  "external_assessment_completed": false,
+  "failures": [],
+  "formal_certification": false,
+  "independent_reproduction_completed": false,
+  "schema": "qsp.stage390.assessment-intake-result.v1",
+  "source_stage": 389,
+  "stage": 390,
+  "stage389_dual_timestamp_verified": false,
+  "submission_present": false,
+  "system_wide_formal_acceptance": false,
+  "upstream_binding_verified": true,
+  "verification_status": "ready"
+}
