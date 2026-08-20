@@ -1,0 +1,562 @@
+name: Stage391 Third-Party Reproduction Verification and Assessment Adjudication
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  stage391-public-verification:
+    name: Stage391 Public Verification
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Show environment
+        run: |
+          python --version
+          git --version
+          openssl version
+
+      - name: Validate Stage391 Python syntax
+        run: |
+          python -m py_compile \
+            development/stage391/verify_stage391_third_party_submission.py \
+            development/stage391/test_stage391_fail_closed.py
+
+      - name: Validate Stage391 public JSON
+        run: |
+          python -m json.tool \
+            development/stage391/stage391_upstream_state.json \
+            >/dev/null
+
+          python -m json.tool \
+            development/stage391/stage391_adjudication_contract.json \
+            >/dev/null
+
+          python -m json.tool \
+            development/stage391/stage391_submission_binding_policy.json \
+            >/dev/null
+
+          python -m json.tool \
+            development/stage391/stage391_current_state.json \
+            >/dev/null
+
+          python -m json.tool \
+            development/stage391/stage391_adjudication_result.json \
+            >/dev/null
+
+      - name: Verify Stage391 canonical result SHA-256
+        run: |
+          cd development/stage391
+
+          shasum -a 256 \
+            -c stage391_adjudication_result.sha256
+
+      - name: Verify exact Stage391 canonical result
+        run: |
+          python - <<'PY'
+          import hashlib
+          from pathlib import Path
+
+          path = Path(
+              "development/stage391/"
+              "stage391_adjudication_result.json"
+          )
+
+          digest = hashlib.sha256(
+              path.read_bytes()
+          ).hexdigest()
+
+          expected = (
+              "ed644d11bd49f67f89cfda50364d6190"
+              "66b4da3a36bf1fb26b38e111b6092b23"
+          )
+
+          print("actual  =", digest)
+          print("expected=", expected)
+
+          if digest != expected:
+              raise SystemExit(
+                  "FAIL: Stage391 canonical result SHA mismatch"
+              )
+
+          print(
+              "PASS: Stage391 canonical result SHA exact"
+          )
+          PY
+
+      - name: Verify Stage390 and Stage389 upstream binding
+        run: |
+          python - <<'PY'
+          import hashlib
+          from pathlib import Path
+
+          targets = {
+              "Stage390": (
+                  Path(
+                      "development/stage390/"
+                      "stage390_assessment_intake_result.json"
+                  ),
+                  (
+                      "90f57cfdca45fe7b6f3a150302e22060"
+                      "ce1e6ac46d2ff2b12889ca51e8c8dc4e"
+                  ),
+              ),
+              "Stage389": (
+                  Path(
+                      "development/stage389/"
+                      "stage389_dual_timestamp_result.json"
+                  ),
+                  (
+                      "3a8815593fd4b570b881e39806c57e32"
+                      "f11d7aec7f544e30481021167b2667c4"
+                  ),
+              ),
+          }
+
+          for name, (path, expected) in targets.items():
+              actual = hashlib.sha256(
+                  path.read_bytes()
+              ).hexdigest()
+
+              print(
+                  name,
+                  "actual  =",
+                  actual,
+              )
+
+              print(
+                  name,
+                  "expected=",
+                  expected,
+              )
+
+              if actual != expected:
+                  raise SystemExit(
+                      "FAIL: "
+                      + name
+                      + " upstream result changed"
+                  )
+
+          print()
+          print(
+              "PASS: Stage390/389 upstream result binding exact"
+          )
+          PY
+
+      - name: Verify Stage391 authoritative state
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          d = json.loads(
+              Path(
+                  "development/stage391/"
+                  "stage391_adjudication_result.json"
+              ).read_text(
+                  encoding="utf-8"
+              )
+          )
+
+          expected = {
+              "stage": 391,
+              "source_stage": 390,
+              "decision":
+                  "third_party_submission_pending",
+              "verification_status":
+                  "waiting_for_external_submission",
+              "submission_present":
+                  False,
+              "submission_origin":
+                  None,
+              "independent_reproduction_completed":
+                  False,
+              "assessment_outcome":
+                  None,
+              "external_assessment_completed":
+                  False,
+              "verified_third_party_agreement":
+                  False,
+              "verified_third_party_disagreement":
+                  False,
+              "critical_failure_count":
+                  0,
+              "formal_certification":
+                  False,
+              "system_wide_formal_acceptance":
+                  False,
+              "entire_system_quantum_safe":
+                  False,
+              "stage389_dual_timestamp_verified":
+                  False,
+              "stage389_state":
+                  "dual_timestamp_pending",
+          }
+
+          for field, expected_value in expected.items():
+
+              actual = d.get(field)
+
+              print(
+                  field,
+                  "=",
+                  repr(actual),
+              )
+
+              if actual != expected_value:
+                  raise SystemExit(
+                      "FAIL: Stage391 authoritative state mismatch: "
+                      + field
+                  )
+
+          if d.get("failures") != []:
+              raise SystemExit(
+                  "FAIL: pending state failures must be empty"
+              )
+
+          print()
+          print(
+              "PASS: Stage391 authoritative state exact"
+          )
+          PY
+
+      - name: Verify deterministic reproduction
+        run: |
+          python \
+            development/stage391/verify_stage391_third_party_submission.py \
+            > /tmp/stage391-fresh.json
+
+          cmp \
+            development/stage391/stage391_adjudication_result.json \
+            /tmp/stage391-fresh.json
+
+          echo \
+            "PASS: Stage391 canonical result reproduced byte-for-byte"
+
+      - name: Run Stage391 Fail-Closed regression tests
+        run: |
+          python \
+            development/stage391/test_stage391_fail_closed.py
+
+      - name: Verify Stage391 Pages evidence mirror
+        run: |
+          python - <<'PY'
+          from hashlib import sha256
+          from pathlib import Path
+
+          dev = Path(
+              "development/stage391"
+          )
+
+          pages = Path(
+              "docs/verification/stage391"
+          )
+
+          files = [
+              "README.md",
+              "stage391_upstream_state.json",
+              "stage391_adjudication_contract.json",
+              "stage391_submission_binding_policy.json",
+              "stage391_current_state.json",
+              "stage391_adjudication_result.json",
+              "stage391_adjudication_result.sha256",
+          ]
+
+          for name in files:
+
+              a = dev / name
+              b = pages / name
+
+              if not a.is_file():
+                  raise SystemExit(
+                      "FAIL: development evidence missing: "
+                      + name
+                  )
+
+              if not b.is_file():
+                  raise SystemExit(
+                      "FAIL: Pages evidence missing: "
+                      + name
+                  )
+
+              if (
+                  sha256(
+                      a.read_bytes()
+                  ).digest()
+                  !=
+                  sha256(
+                      b.read_bytes()
+                  ).digest()
+              ):
+                  raise SystemExit(
+                      "FAIL: Pages mirror mismatch: "
+                      + name
+                  )
+
+              print(
+                  "PASS:",
+                  name,
+              )
+
+          print()
+          print(
+              "PASS: Stage391 Pages evidence mirror exact"
+          )
+          PY
+
+      - name: Verify Stage391 documentation non-claims
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          texts = [
+              Path(
+                  "development/stage391/README.md"
+              ).read_text(
+                  encoding="utf-8"
+              ),
+              Path(
+                  "README.md"
+              ).read_text(
+                  encoding="utf-8"
+              ),
+          ]
+
+          required = [
+              "third_party_submission_pending",
+              "submission_present = false",
+              "external_assessment_completed = false",
+              "verified_third_party_agreement = false",
+              "verified_third_party_disagreement = false",
+              "dual_timestamp_pending",
+              "stage389_dual_timestamp_verified = false",
+              "16 / 16 PASS",
+              "3 / 3 PASS",
+              (
+                  "ed644d11bd49f67f89cfda50364d6190"
+                  "66b4da3a36bf1fb26b38e111b6092b23"
+              ),
+              "MIT License",
+          ]
+
+          for source in texts:
+
+              for item in required:
+
+                  if item not in source:
+                      raise SystemExit(
+                          "FAIL: documentation missing: "
+                          + item
+                      )
+
+          print(
+              "PASS: Stage391 documentation remains non-overclaiming"
+          )
+          PY
+
+      - name: Verify Stage391 publication boundary
+        run: |
+          python - <<'PY'
+          import subprocess
+          from pathlib import Path
+
+          forbidden_names = {
+              "core",
+              "private_core",
+              "private",
+              "secrets",
+              "keys",
+              "imported",
+          }
+
+          tracked = subprocess.check_output(
+              [
+                  "git",
+                  "ls-files",
+              ],
+              text=True,
+          ).splitlines()
+
+          for raw in tracked:
+
+              path = Path(raw)
+
+              if any(
+                  part in forbidden_names
+                  for part in path.parts
+              ):
+                  raise SystemExit(
+                      "FAIL: forbidden tracked path: "
+                      + raw
+                  )
+
+              if path.suffix.lower() in {
+                  ".tsr",
+                  ".tsq",
+                  ".ots",
+                  ".p7s",
+              }:
+                  raise SystemExit(
+                      "FAIL: raw timestamp proof tracked: "
+                      + raw
+                  )
+
+              if (
+                  path.name == "__pycache__"
+                  or path.suffix.lower() in {
+                      ".pyc",
+                      ".pyo",
+                  }
+              ):
+                  raise SystemExit(
+                      "FAIL: generated Python cache tracked: "
+                      + raw
+                  )
+
+          print(
+              "PASS: Stage391 publication boundary clean"
+          )
+          PY
+
+      - name: Verify docs index Stage391 structure
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          text = Path(
+              "docs/index.html"
+          ).read_text(
+              encoding="utf-8"
+          )
+
+          checks = {
+              "stage391_title":
+                  text.count(
+                      "<title>Stage391: Independent Third-Party "
+                      "Reproduction Verification &amp; "
+                      "Assessment Adjudication Gate</title>"
+                  ),
+
+              "stage391_current_start":
+                  text.count(
+                      "<!-- STAGE391_CURRENT_PAGE_HEADER_START -->"
+                  ),
+
+              "stage391_current_end":
+                  text.count(
+                      "<!-- STAGE391_CURRENT_PAGE_HEADER_END -->"
+                  ),
+
+              "stage390_current_start":
+                  text.count(
+                      "<!-- STAGE390_CURRENT_PAGE_HEADER_START -->"
+                  ),
+
+              "stage390_history_begin":
+                  text.count(
+                      "<!-- STAGE390_APPEND_ONLY_BEGIN -->"
+                  ),
+
+              "stage390_history_end":
+                  text.count(
+                      "<!-- STAGE390_APPEND_ONLY_END -->"
+                  ),
+
+              "stage391_body_begin":
+                  text.count(
+                      "<!-- STAGE391_APPEND_ONLY_BEGIN -->"
+                  ),
+
+              "stage391_body_end":
+                  text.count(
+                      "<!-- STAGE391_APPEND_ONLY_END -->"
+                  ),
+
+              "html_open":
+                  text.count("<html"),
+
+              "html_close":
+                  text.count("</html>"),
+
+              "body_open":
+                  text.count("<body>"),
+
+              "body_close":
+                  text.count("</body>"),
+          }
+
+          expected = {
+              "stage391_title": 1,
+              "stage391_current_start": 1,
+              "stage391_current_end": 1,
+              "stage390_current_start": 0,
+              "stage390_history_begin": 1,
+              "stage390_history_end": 1,
+              "stage391_body_begin": 1,
+              "stage391_body_end": 1,
+              "html_open": 1,
+              "html_close": 1,
+              "body_open": 1,
+              "body_close": 1,
+          }
+
+          for key, value in checks.items():
+
+              print(
+                  key,
+                  "=",
+                  value,
+              )
+
+              if value != expected[key]:
+                  raise SystemExit(
+                      "FAIL: docs index mismatch: "
+                      + key
+                  )
+
+          current_pos = text.find(
+              "<!-- STAGE391_CURRENT_PAGE_HEADER_START -->"
+          )
+
+          stage390_pos = text.find(
+              "<!-- STAGE390_APPEND_ONLY_BEGIN -->"
+          )
+
+          stage391_pos = text.find(
+              "<!-- STAGE391_APPEND_ONLY_BEGIN -->"
+          )
+
+          if not (
+              current_pos
+              < stage390_pos
+              < stage391_pos
+          ):
+              raise SystemExit(
+                  "FAIL: Stage391 docs ordering invalid"
+              )
+
+          print()
+          print(
+              "PASS: Stage391 docs index structure exact"
+          )
+          PY
+
+      - name: Final repository diff check
+        run: |
+          git diff --check

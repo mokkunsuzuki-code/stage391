@@ -598,3 +598,6 @@ development/stage389/*
 # Stage391 generated Python cache
 __pycache__/
 *.py[cod]
+
+# Stage391 public GitHub Actions workflow
+!.github/workflows/stage391-third-party-reproduction-adjudication.yml
