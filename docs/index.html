@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="google" content="notranslate">
-  <title>Stage389: Independent Assessment Package Dual External Timestamp Anchoring &amp; Verification Gate</title>
+  <title>Stage390: Independent Third-Party Reproduction &amp; Assessment Intake Gate</title>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 0; background: #f6f8fa; color: #24292f; }
     header { background: #0d1117; color: white; padding: 44px 32px; }
@@ -28,52 +28,58 @@
 
 
 
-<!-- STAGE389_CURRENT_PAGE_HEADER_START -->
+<!-- STAGE390_CURRENT_PAGE_HEADER_START -->
 <section class="card">
-  <h1>Stage389</h1>
+  <h1>Stage390</h1>
 
   <h2>
-    Independent Assessment Package
-    Dual External Timestamp Anchoring
-    &amp; Verification Gate
+    Independent Third-Party Reproduction
+    &amp; Assessment Intake Gate
   </h2>
 
   <p>
-    Stage388で決定論的に固定された
-    第三者評価用Evidence Manifestを変更せず、
-    RFC3161とOpenTimestampsという
-    2つの独立した外部時間証明へ結合し、
-    同一対象への二重タイムスタンプを
-    Fail-Closedで検証します。
+    <strong>
+      第三者独立再現・外部評価受入ゲート
+    </strong>
   </p>
 
   <p>
-    現在、RFC3161は実証明に対する
-    cryptographic verificationが完了しています。
-    OpenTimestamps proofも存在し、
-    Stage388 Evidence Manifestとの対象一致を確認していますが、
-    Bitcoin側の検証環境が必要なチェーン情報を
-    まだ利用できないため、
-    OpenTimestamps成功とは判定していません。
+    Stage390は、Stage389までに固定された
+    検証結果と公開証拠を変更せず、
+    外部の第三者が独立した再現結果と
+    評価結果を提出し、
+    QSP側のcanonical resultとの
+    agreement、disagreement、
+    またはincompleteを
+    Fail-Closedで検証するための
+    assessment intake interfaceです。
   </p>
 
   <p>
     Current decision:
-    <code>dual_timestamp_pending</code>
+    <code>third_party_assessment_ready</code>
   </p>
 
   <p>
-    RFC3161 verified:
-    <code>true</code>
-    &nbsp;|&nbsp;
-    OpenTimestamps verified:
+    Submission present:
     <code>false</code>
     &nbsp;|&nbsp;
-    Dual timestamp verified:
+    Independent reproduction completed:
+    <code>false</code>
+    &nbsp;|&nbsp;
+    External assessment completed:
+    <code>false</code>
+  </p>
+
+  <p>
+    Stage389 state:
+    <code>dual_timestamp_pending</code>
+    &nbsp;|&nbsp;
+    Stage389 dual timestamp verified:
     <code>false</code>
   </p>
 </section>
-<!-- STAGE389_CURRENT_PAGE_HEADER_END -->
+<!-- STAGE390_CURRENT_PAGE_HEADER_END -->
 
 <!-- STAGE388_CURRENT_PAGE_HEADER_START -->
 <section class="card">
