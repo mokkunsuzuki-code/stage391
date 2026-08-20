@@ -586,3 +586,15 @@ development/stage389/*
 
 # Stage390 public GitHub Actions workflow
 !.github/workflows/stage390-independent-assessment-intake.yml
+
+# Stage391 public verification and assessment layer
+!development/stage391/
+!development/stage391/**
+
+# Stage391 public Pages evidence
+!docs/verification/stage391/
+!docs/verification/stage391/**
+
+# Stage391 generated Python cache
+__pycache__/
+*.py[cod]

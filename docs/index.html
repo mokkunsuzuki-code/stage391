@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="google" content="notranslate">
-  <title>Stage390: Independent Third-Party Reproduction &amp; Assessment Intake Gate</title>
+  <title>Stage391: Independent Third-Party Reproduction Verification &amp; Assessment Adjudication Gate</title>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 0; background: #f6f8fa; color: #24292f; }
     header { background: #0d1117; color: white; padding: 44px 32px; }
@@ -28,43 +28,40 @@
 
 
 
-<!-- STAGE390_CURRENT_PAGE_HEADER_START -->
+<!-- STAGE391_CURRENT_PAGE_HEADER_START -->
 <section class="card">
-  <h1>Stage390</h1>
+  <h1>Stage391</h1>
 
   <h2>
-    Independent Third-Party Reproduction
-    &amp; Assessment Intake Gate
+    Independent Third-Party Reproduction Verification
+    &amp; Assessment Adjudication Gate
   </h2>
 
   <p>
     <strong>
-      第三者独立再現・外部評価受入ゲート
+      第三者独立再現検証・外部評価判定ゲート
     </strong>
   </p>
 
   <p>
-    Stage390は、Stage389までに固定された
-    検証結果と公開証拠を変更せず、
-    外部の第三者が独立した再現結果と
-    評価結果を提出し、
-    QSP側のcanonical resultとの
-    agreement、disagreement、
-    またはincompleteを
-    Fail-Closedで検証するための
-    assessment intake interfaceです。
+    Stage391は、Stage390で準備された
+    第三者評価受入インターフェースの上に、
+    実際の第三者Submissionを
+    独立性、upstream binding、
+    reproduction state、
+    mismatch count、
+    assessment outcomeに基づいて
+    Fail-Closedで検証・判定する
+    executable adjudication layerです。
   </p>
 
   <p>
     Current decision:
-    <code>third_party_assessment_ready</code>
+    <code>third_party_submission_pending</code>
   </p>
 
   <p>
     Submission present:
-    <code>false</code>
-    &nbsp;|&nbsp;
-    Independent reproduction completed:
     <code>false</code>
     &nbsp;|&nbsp;
     External assessment completed:
@@ -72,14 +69,22 @@
   </p>
 
   <p>
-    Stage389 state:
-    <code>dual_timestamp_pending</code>
+    Verified agreement:
+    <code>false</code>
     &nbsp;|&nbsp;
-    Stage389 dual timestamp verified:
+    Verified disagreement:
     <code>false</code>
   </p>
+
+  <p>
+    Stage390:
+    <code>third_party_assessment_ready</code>
+    &nbsp;|&nbsp;
+    Stage389:
+    <code>dual_timestamp_pending</code>
+  </p>
 </section>
-<!-- STAGE390_CURRENT_PAGE_HEADER_END -->
+<!-- STAGE391_CURRENT_PAGE_HEADER_END -->
 
 <!-- STAGE388_CURRENT_PAGE_HEADER_START -->
 <section class="card">
@@ -5583,6 +5588,246 @@ Verified / Pending / Block</pre>
   </p>
 </section>
 <!-- STAGE390_APPEND_ONLY_END -->
+
+
+<!-- STAGE391_APPEND_ONLY_BEGIN -->
+<section class="card" id="stage391">
+
+  <h2>
+    Stage391: Independent Third-Party Reproduction Verification
+    &amp; Assessment Adjudication Gate
+  </h2>
+
+  <p>
+    <strong>
+      第三者独立再現検証・外部評価判定ゲート
+    </strong>
+  </p>
+
+  <p>
+    Stage391は、Stage390で構築された
+    third-party assessment intake interfaceに対し、
+    実際の第三者Submissionを
+    Fail-Closedで検証・分類する
+    adjudication layerを追加します。
+  </p>
+
+  <h3>Current Decision</h3>
+
+  <p>
+    <code>third_party_submission_pending</code>
+  </p>
+
+  <p>
+    現在、実際の独立第三者Submissionは
+    まだ受領・検証されていません。
+  </p>
+
+  <ul>
+    <li>Submission present: <code>false</code></li>
+    <li>Submission origin: <code>null</code></li>
+    <li>Independent reproduction completed: <code>false</code></li>
+    <li>Assessment outcome: <code>null</code></li>
+    <li>External assessment completed: <code>false</code></li>
+    <li>Verified third-party agreement: <code>false</code></li>
+    <li>Verified third-party disagreement: <code>false</code></li>
+  </ul>
+
+  <h3>Stage390 Binding</h3>
+
+  <p>
+    Stage391はStage390のcanonical resultを
+    変更せずに参照します。
+  </p>
+
+  <ul>
+    <li>
+      Stage390 decision:
+      <code>third_party_assessment_ready</code>
+    </li>
+    <li>
+      Stage390 canonical SHA-256:
+      <code>90f57cfdca45fe7b6f3a150302e22060ce1e6ac46d2ff2b12889ca51e8c8dc4e</code>
+    </li>
+    <li>
+      Stage390 commit:
+      <code>3d9421967c407fd965d2bdfa25b413ff1c99710a</code>
+    </li>
+  </ul>
+
+  <h3>Stage389 Preservation</h3>
+
+  <p>
+    Stage391はStage389のOpenTimestamps状態を
+    自己昇格させません。
+  </p>
+
+  <ul>
+    <li>
+      Stage389 decision:
+      <code>dual_timestamp_pending</code>
+    </li>
+    <li>
+      Stage389 dual timestamp verified:
+      <code>false</code>
+    </li>
+    <li>
+      Stage389 canonical SHA-256:
+      <code>3a8815593fd4b570b881e39806c57e32f11d7aec7f544e30481021167b2667c4</code>
+    </li>
+  </ul>
+
+  <h3>Independent Third-Party Requirement</h3>
+
+  <p>
+    外部評価として認められるSubmission originは、
+    <code>independent_third_party</code>
+    のみです。
+  </p>
+
+  <p>
+    self-test、smoke-test、developer fixture、
+    internal CIは外部第三者評価として扱われません。
+  </p>
+
+  <h3>Adjudication Outcomes</h3>
+
+  <ul>
+    <li>
+      Agreement:
+      <code>third_party_reproduction_agreement_verified</code>
+    </li>
+    <li>
+      Disagreement:
+      <code>third_party_reproduction_disagreement_verified</code>
+    </li>
+    <li>
+      Incomplete:
+      <code>third_party_reproduction_incomplete</code>
+    </li>
+    <li>
+      Invalid:
+      <code>third_party_submission_rejected</code>
+    </li>
+  </ul>
+
+  <p>
+    現在、上記の実第三者判定はいずれも
+    authoritative stateとして発行されていません。
+  </p>
+
+  <h3>Fail-Closed Regression</h3>
+
+  <p>
+    Negative regression:
+    <code>16 / 16 PASS</code>
+  </p>
+
+  <p>
+    Classification-path fixtures:
+    <code>3 / 3 PASS</code>
+  </p>
+
+  <p>
+    3件のclassification fixtureは
+    agreement、disagreement、incompleteの
+    分類ロジックを確認するテストデータであり、
+    実際の外部第三者評価ではありません。
+  </p>
+
+  <h3>Canonical Stage391 Result</h3>
+
+  <p>
+    SHA-256:
+    <code>ed644d11bd49f67f89cfda50364d619066b4da3a36bf1fb26b38e111b6092b23</code>
+  </p>
+
+  <h3>Public Stage391 Evidence</h3>
+
+  <ul>
+    <li>
+      <a href="./verification/stage391/README.md">
+        Stage391 Verification &amp; Assessment Instructions
+      </a>
+    </li>
+
+    <li>
+      <a href="./verification/stage391/stage391_upstream_state.json">
+        Stage391 Upstream State
+      </a>
+    </li>
+
+    <li>
+      <a href="./verification/stage391/stage391_adjudication_contract.json">
+        Stage391 Adjudication Contract
+      </a>
+    </li>
+
+    <li>
+      <a href="./verification/stage391/stage391_submission_binding_policy.json">
+        Stage391 Submission Binding Policy
+      </a>
+    </li>
+
+    <li>
+      <a href="./verification/stage391/stage391_current_state.json">
+        Stage391 Current State
+      </a>
+    </li>
+
+    <li>
+      <a href="./verification/stage391/stage391_adjudication_result.json">
+        Stage391 Adjudication Result
+      </a>
+    </li>
+
+    <li>
+      <a href="./verification/stage391/stage391_adjudication_result.sha256">
+        Stage391 Result SHA-256 Record
+      </a>
+    </li>
+  </ul>
+
+  <h3>Mandatory Non-Claims</h3>
+
+  <ul>
+    <li>External assessment completed: <code>false</code></li>
+    <li>Formal certification: <code>false</code></li>
+    <li>System-wide formal acceptance: <code>false</code></li>
+    <li>Entire system quantum safe: <code>false</code></li>
+    <li>Stage389 dual timestamp verified: <code>false</code></li>
+  </ul>
+
+  <h3>Preservation Boundary</h3>
+
+  <p>
+    Stage391はStage390、Stage389、
+    およびそれ以前のcanonical evidence、
+    公開ページ、検証結果を
+    削除・置換・上書きしません。
+  </p>
+
+  <h3>Publication Boundary</h3>
+
+  <ul>
+    <li>No private core is published.</li>
+    <li>No private directory is published.</li>
+    <li>No secret, credential, token, seed, or private key is published.</li>
+    <li>No raw RFC3161 response is published.</li>
+    <li>No raw OpenTimestamps proof is published.</li>
+    <li>No raw QKD secret material is published.</li>
+    <li>Only reviewed public verification and assessment metadata is published.</li>
+  </ul>
+
+  <h3>Stage391 License</h3>
+
+  <p>
+    <strong>License:</strong>
+    MIT License
+  </p>
+
+</section>
+<!-- STAGE391_APPEND_ONLY_END -->
 
 </body>
 </html>

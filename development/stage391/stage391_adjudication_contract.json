@@ -1,0 +1,63 @@
+{
+  "schema": "qsp.stage391.adjudication-contract.v1",
+  "stage": 391,
+  "name": "Independent Third-Party Reproduction Verification & Assessment Adjudication Gate",
+  "purpose": "Verify an actual third-party reproduction submission against the fixed Stage390 intake contract and canonical result, then adjudicate agreement, disagreement, incomplete, or rejection without modifying upstream evidence.",
+  "initial_state": {
+    "submission_present": false,
+    "decision": "third_party_submission_pending",
+    "assessment_outcome": null,
+    "independent_reproduction_completed": false,
+    "external_assessment_completed": false
+  },
+  "accepted_submission_origins": [
+    "independent_third_party"
+  ],
+  "non_external_origins": [
+    "self_test",
+    "smoke_test",
+    "developer_fixture",
+    "internal_ci"
+  ],
+  "adjudication_outcomes": [
+    "agreement",
+    "disagreement",
+    "incomplete",
+    "invalid_submission"
+  ],
+  "success_decision": "third_party_reproduction_agreement_verified",
+  "disagreement_decision": "third_party_reproduction_disagreement_verified",
+  "incomplete_decision": "third_party_reproduction_incomplete",
+  "rejected_decision": "third_party_submission_rejected",
+  "pending_decision": "third_party_submission_pending",
+  "agreement_requirements": {
+    "submission_present": true,
+    "submission_origin": "independent_third_party",
+    "independence_declaration_valid": true,
+    "stage390_binding_verified": true,
+    "submission_integrity_verified": true,
+    "reproduction_completed": true,
+    "required_evidence_present": true,
+    "canonical_comparison_completed": true,
+    "mismatch_count": 0,
+    "publication_boundary_violation": false
+  },
+  "fail_closed_rules": {
+    "self_test_cannot_be_external_assessment": true,
+    "incomplete_cannot_be_agreement": true,
+    "mismatch_cannot_be_agreement": true,
+    "zero_mismatch_cannot_be_disagreement": true,
+    "invalid_stage390_binding_rejected": true,
+    "malformed_submission_rejected": true,
+    "missing_independence_declaration_rejected": true,
+    "stage389_timestamp_self_promotion_forbidden": true,
+    "formal_certification_self_claim_forbidden": true,
+    "entire_system_quantum_safe_self_claim_forbidden": true
+  },
+  "non_claims": {
+    "formal_certification": false,
+    "system_wide_formal_acceptance": false,
+    "entire_system_quantum_safe": false,
+    "stage389_dual_timestamp_verified": false
+  }
+}

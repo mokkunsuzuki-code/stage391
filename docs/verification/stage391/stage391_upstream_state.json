@@ -1,0 +1,24 @@
+{
+  "schema": "qsp.stage391.upstream-state.v1",
+  "stage": 391,
+  "source_stage": 390,
+  "source_stage_name": "Independent Third-Party Reproduction & Assessment Intake Gate",
+  "expected_stage390_commit": "3d9421967c407fd965d2bdfa25b413ff1c99710a",
+  "expected_stage390_result_sha256": "90f57cfdca45fe7b6f3a150302e22060ce1e6ac46d2ff2b12889ca51e8c8dc4e",
+  "stage390_decision": "third_party_assessment_ready",
+  "stage390_submission_present": false,
+  "stage390_external_assessment_completed": false,
+  "stage390_stage389_dual_timestamp_verified": false,
+  "stage389_state": {
+    "decision": "dual_timestamp_pending",
+    "dual_timestamp_verified": false,
+    "must_remain_external_to_stage391": true
+  },
+  "stage391_constraints": {
+    "must_preserve_stage390_result": true,
+    "must_not_modify_stage389_timestamp_state": true,
+    "must_not_self_promote_external_assessment": true,
+    "must_not_treat_self_test_as_third_party": true,
+    "must_fail_closed_on_invalid_submission": true
+  }
+}

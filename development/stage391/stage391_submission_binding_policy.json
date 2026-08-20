@@ -1,0 +1,35 @@
+{
+  "schema": "qsp.stage391.submission-binding-policy.v1",
+  "stage": 391,
+  "binds_to": {
+    "stage390_commit": "3d9421967c407fd965d2bdfa25b413ff1c99710a",
+    "stage390_result_sha256": "90f57cfdca45fe7b6f3a150302e22060ce1e6ac46d2ff2b12889ca51e8c8dc4e",
+    "stage390_submission_schema": "development/stage390/stage390_assessment_submission_schema.json",
+    "stage390_environment_schema": "development/stage390/stage390_assessor_environment_schema.json",
+    "stage390_reproduction_result_schema": "development/stage390/stage390_reproduction_result_schema.json",
+    "stage390_intake_policy": "development/stage390/stage390_assessment_intake_policy.json"
+  },
+  "required_submission_properties": [
+    "submission_origin",
+    "independence_declaration",
+    "assessor_environment",
+    "reproduction_result",
+    "stage390_result_sha256",
+    "stage390_commit"
+  ],
+  "comparison_rules": {
+    "exact_stage390_result_sha_required": true,
+    "exact_stage390_commit_required": true,
+    "negative_mismatch_count_forbidden": true,
+    "boolean_mismatch_count_forbidden": true,
+    "agreement_requires_zero_mismatch": true,
+    "disagreement_requires_positive_mismatch": true,
+    "incomplete_requires_reproduction_completed_false": true
+  },
+  "security_boundaries": {
+    "private_material_required": false,
+    "private_material_publication_forbidden": true,
+    "upstream_modification_forbidden": true,
+    "stage389_timestamp_modification_forbidden": true
+  }
+}

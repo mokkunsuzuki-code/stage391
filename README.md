@@ -1648,3 +1648,177 @@ See the repository-level:
 `LICENSE`
 
 The MIT License applies to the published source code and documentation in this repository. It does not override confidentiality requirements, private-material restrictions, security boundaries, or applicable third-party licenses.
+
+---
+
+## Stage391 — Independent Third-Party Reproduction Verification & Assessment Adjudication Gate
+
+日本語:
+
+**第三者独立再現検証・外部評価判定ゲート**
+
+Stage391は、Stage390で準備された第三者評価受入インターフェースの上に、実際の第三者Submissionを検証・判定するための実行可能なadjudication layerを追加します。
+
+第三者から提出された結果をそのまま信用するのではなく、独立性、Stage389へのbinding、再現状態、mismatch、assessment outcomeをFail-Closedで確認し、以下のいずれかへ分類します。
+
+- `agreement`
+- `disagreement`
+- `incomplete`
+- `invalid submission`
+
+### Current Stage391 Decision
+
+`third_party_submission_pending`
+
+現在はStage391の検証・判定機構が構築されていますが、実際の独立第三者Submissionはまだ存在しません。
+
+Current authoritative state:
+
+`submission_present = false`
+
+`submission_origin = null`
+
+`independent_reproduction_completed = false`
+
+`assessment_outcome = null`
+
+`external_assessment_completed = false`
+
+`verified_third_party_agreement = false`
+
+`verified_third_party_disagreement = false`
+
+`critical_failure_count = 0`
+
+### Stage390 Inherited State
+
+Stage391はStage390のcanonical resultを変更しません。
+
+Stage390 remains:
+
+`third_party_assessment_ready`
+
+Stage390 canonical SHA-256:
+
+`90f57cfdca45fe7b6f3a150302e22060ce1e6ac46d2ff2b12889ca51e8c8dc4e`
+
+### Stage389 Inherited State
+
+Stage391はStage389のOpenTimestamps状態を勝手に成功へ昇格させません。
+
+Stage389 remains:
+
+`dual_timestamp_pending`
+
+`stage389_dual_timestamp_verified = false`
+
+Stage389 canonical SHA-256:
+
+`3a8815593fd4b570b881e39806c57e32f11d7aec7f544e30481021167b2667c4`
+
+Bitcoin/OpenTimestampsの最終検証はStage389自身で完了する必要があります。
+
+### Independent Third-Party Requirement
+
+Stage391で外部第三者評価として扱えるのは、
+
+`submission_origin = independent_third_party`
+
+として検証されたSubmissionのみです。
+
+以下は第三者評価として扱いません。
+
+- `self_test`
+- `smoke_test`
+- `developer_fixture`
+- `internal_ci`
+
+テストfixtureがagreement判定ロジックを通過しても、それだけで実際の外部評価完了とはみなしません。
+
+### Agreement / Disagreement / Incomplete
+
+Verified agreement decision:
+
+`third_party_reproduction_agreement_verified`
+
+Verified disagreement decision:
+
+`third_party_reproduction_disagreement_verified`
+
+Incomplete decision:
+
+`third_party_reproduction_incomplete`
+
+Invalid or contradictory submission:
+
+`third_party_submission_rejected`
+
+現在はいずれの実第三者判定も発行されていません。
+
+### Fail-Closed Regression
+
+Stage391 currently validates:
+
+`16 / 16 PASS`
+
+negative Fail-Closed regression cases.
+
+Classification-path fixtures:
+
+`3 / 3 PASS`
+
+These fixtures verify agreement, disagreement, and incomplete classification logic.
+
+They are test fixtures only and are not real external assessments.
+
+### Canonical Stage391 Result
+
+Current canonical Stage391 result SHA-256:
+
+`ed644d11bd49f67f89cfda50364d619066b4da3a36bf1fb26b38e111b6092b23`
+
+Current canonical decision:
+
+`third_party_submission_pending`
+
+### Mandatory Non-Claims
+
+The following remain false:
+
+`external_assessment_completed = false`
+
+`formal_certification = false`
+
+`system_wide_formal_acceptance = false`
+
+`entire_system_quantum_safe = false`
+
+`stage389_dual_timestamp_verified = false`
+
+Stage391 does not claim that an independent external reproduction, formal external assessment, certification, complete system acceptance, complete quantum safety, or Stage389 dual timestamp finalization has already occurred.
+
+### Public Stage391 Evidence
+
+- `docs/verification/stage391/README.md`
+- `docs/verification/stage391/stage391_upstream_state.json`
+- `docs/verification/stage391/stage391_adjudication_contract.json`
+- `docs/verification/stage391/stage391_submission_binding_policy.json`
+- `docs/verification/stage391/stage391_current_state.json`
+- `docs/verification/stage391/stage391_adjudication_result.json`
+- `docs/verification/stage391/stage391_adjudication_result.sha256`
+
+### Stage391 Publication Boundary
+
+Stage391 preserves the existing QSP public/private boundary.
+
+The public repository does not intentionally publish private core, private directories, secrets, credentials, authentication tokens, seeds, private keys, raw RFC3161 responses, raw OpenTimestamps proofs, or raw QKD secret material.
+
+### Stage391 License
+
+This project is licensed under the MIT License.
+
+See the repository-level:
+
+`LICENSE`
+
+The MIT License applies to the published source code and documentation in this repository. It does not override confidentiality requirements, private-material restrictions, security boundaries, or applicable third-party licenses.
