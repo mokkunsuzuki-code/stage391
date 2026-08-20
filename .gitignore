@@ -583,3 +583,6 @@ development/stage389/*
 !docs/verification/stage390/stage390_assessment_intake_policy.json
 !docs/verification/stage390/stage390_assessment_intake_result.json
 !docs/verification/stage390/stage390_assessment_intake_result.sha256
+
+# Stage390 public GitHub Actions workflow
+!.github/workflows/stage390-independent-assessment-intake.yml
