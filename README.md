@@ -1,3 +1,106 @@
+<!-- STAGE391_EXTERNAL_ASSESSOR_FRONTDOOR_START -->
+
+# QSP Stage391
+
+## Independent Third-Party Reproduction Verification & Assessment Adjudication Gate
+
+**第三者独立再現検証・外部評価判定ゲート**
+
+Stage391 is the current public verification stage of QSP.
+
+Current decision:
+
+`third_party_submission_pending`
+
+Verification status:
+
+`waiting_for_external_submission`
+
+Submission present:
+
+`false`
+
+External assessment completed:
+
+`false`
+
+Verified third-party agreement:
+
+`false`
+
+Verified third-party disagreement:
+
+`false`
+
+Stage391 does not claim certification, formal external assessment completion, system-wide formal acceptance, complete quantum safety, or completed Stage389 dual timestamp verification.
+
+## Important Upstream Status
+
+Stage390:
+
+`third_party_assessment_ready`
+
+Stage389:
+
+`dual_timestamp_pending`
+
+Stage389 dual timestamp verified:
+
+`false`
+
+Stage389 records RFC3161 verification as verified, while OpenTimestamps / Bitcoin verification remains pending.
+
+## Canonical Stage391 Result
+
+SHA-256:
+
+`ed644d11bd49f67f89cfda50364d619066b4da3a36bf1fb26b38e111b6092b23`
+
+## For Independent Assessors
+
+1. Clone the Stage391 repository.
+2. Checkout the exact assessment commit identified in the delivery package.
+3. Verify the published SHA-256 evidence.
+4. Record the independent execution environment.
+5. Run the Stage391 deterministic verifier.
+6. Run the Stage391 Fail-Closed regression suite.
+7. Compare reproduced results with the canonical published result.
+8. Record all critical mismatches.
+9. Complete the supplied `submission_template.json`.
+10. Return `agreement`, `disagreement`, or `incomplete`.
+
+Self-test or smoke-test by the QSP developer does not qualify as an independent third-party assessment.
+
+## Core Verification Files
+
+`development/stage391/verify_stage391_third_party_submission.py`
+
+`development/stage391/test_stage391_fail_closed.py`
+
+Current regression coverage:
+
+`16 / 16 PASS`
+
+Current positive classification coverage:
+
+`3 / 3 PASS`
+
+## Security / Publication Boundary
+
+No private core, private key, secret, credential, raw RFC3161 proof, raw OpenTimestamps proof, or raw QKD secret material is required or published.
+
+## License
+
+MIT License
+
+---
+
+## Historical QSP Stage Documentation
+
+The complete historical documentation is preserved below without deletion or replacement.
+
+<!-- STAGE391_EXTERNAL_ASSESSOR_FRONTDOOR_END -->
+
 <!-- STAGE383_ROOT_README_START -->
 # Stage383: Policy-Bound Recovery Orchestration & Formal Acceptance Eligibility Gate
 
